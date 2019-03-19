@@ -31,12 +31,12 @@ steps:
       event: deployment
 
 - name: deploy docker image to ecs service
-  image: omerxx/drone-ecs-plugin
+  image: plugins/drone-ecs
   settings:
-    cluster: simple-go-web-app-ecs-cluster
+    cluster: simple-go-webserver-cluster
     service: simple-go-webserver-service
     region: us-east-1
-    family: simple-go-webserver-task
+    family: simple-go-webserver-task-definition
     image_name: chaturvedisulabh/simple-go-webserver
     image_tag: latest
     access_key: 
