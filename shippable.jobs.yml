@@ -1,3 +1,17 @@
+Resources:
+  # Pointer to a repository on source control
+  - name: app-docker-ecs-gitrepo
+    type: gitRepo
+    integration: github
+    pointer:
+      sourceName: ChaturvediSulabh/app-docker-ecs-cfn
+      branch: master
+  # Pointer to AWS account
+  - name: aws_cliConfig   
+    type: cliConfig
+    integration: AWS_Personal_Account                 
+    pointer:
+      region: us-east-1 
 jobs:
   - name: Immutable-Infrastructure-IaC-Pipeline
     type: runSh
@@ -10,3 +24,6 @@ jobs:
           - script: cd "${SHIPPABLE_BUILD_DIR}"
           - script: aws cloudformation validate-template --template-body file://${SHIPPABLE_BUILD_DIR}/shippable/infrastructure.json --region us-east-1
           - script: aws cloudformation create-stack --stack-name myteststack  --template-body file://${SHIPPABLE_BUILD_DIR}/shippable/infrastructure.json --region us-east-1
+          - script: ${SHIPPABLE_BUILD_DIR}/shippable/docker-task.sh createrepo
+          - script: ${SHIPPABLE_BUILD_DIR}/shippable/docker-task.sh build
+          - script: ${SHIPPABLE_BUILD_DIR}/shippable/docker-task.sh push
