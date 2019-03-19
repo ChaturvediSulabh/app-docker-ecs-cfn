@@ -33,15 +33,15 @@ steps:
 - name: deploy docker image to ecs service
   image: peloton/drone-ecs
   settings:
-    access_key: 
-      from_secret: AWS_ACCESS_KEY
-    secret_key:
-      from_secret: AWS_SECRET_KEY
     service: simple-go-webserver-service
     region: us-east-1
     family: simple-go-webserver-task
     image_name: chaturvedisulabh/simple-go-webserver
     image_tag: latest
+    access_key: 
+      from_secret: AWS_ACCESS_KEY
+    secret_key:
+      from_secret: AWS_SECRET_KEY
     port_mappings:
       - 80 80
     memory: 128
