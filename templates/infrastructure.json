@@ -321,7 +321,10 @@
             }
         },
         "ECSCluster": {
-            "Type": "AWS::ECS::Cluster"
+            "Type": "AWS::ECS::Cluster",
+            "Properties": {
+                "ClusterName": "simple-go-web-app-ecs-cluster"
+            }
         },
         "EcsHostSecurityGroup": {
             "Type": "AWS::EC2::SecurityGroup",
@@ -660,24 +663,6 @@
         }
     },
     "Outputs": {
-        "ClusterName": {
-            "Description": "The name of the ECS cluster",
-            "Value": {
-                "Ref": "ECSCluster"
-            },
-            "Export": {
-                "Name": {
-                    "Fn::Join": [
-                        ":",
-                        [{
-                                "Ref": "AWS::StackName"
-                            },
-                            "ClusterName"
-                        ]
-                    ]
-                }
-            }
-        },
         "ExternalUrl": {
             "Description": "The url of the external load balancer",
             "Value": {

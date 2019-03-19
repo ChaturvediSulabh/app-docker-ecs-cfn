@@ -31,8 +31,9 @@ steps:
       event: deployment
 
 - name: deploy docker image to ecs service
-  image: peloton/drone-ecs
+  image: omerxx/drone-ecs-plugin
   settings:
+    cluster: simple-go-web-app-ecs-cluster
     service: simple-go-webserver-service
     region: us-east-1
     family: simple-go-webserver-task
@@ -44,4 +45,4 @@ steps:
       from_secret: AWS_SECRET_KEY
     port_mappings:
       - 80 80
-    memory: 128
+    memory: 256
