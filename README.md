@@ -2,7 +2,7 @@
 # NGX-APP-ECS-CFN
 
 ## Introduction
-This Task Deploys Nginx Docker container to ECS via `CloudFormation` and Builds CloudFormation Stack i.e. Deploys to AWS via CI/CD using tool called `Drone CI`. 
+This Task Deploys Nginx Docker container to ECS via `CloudFormation` and Builds CloudFormation Stack i.e. Deploys to AWS via one push CI/CD using tool called `Drone CI`. 
 Following is the pictorial representation of the task
 ![HighLevelDesign](https://github.com/ChaturvediSulabh/app-docker-ecs-cfn/blob/master/resources/images/new-designer.png)
 
@@ -16,7 +16,7 @@ Following is the pictorial representation of the task
 	- AWS_ACCESS_KEY - < YOUR ACCESS KEY >
 	- AWS_SECRET_KEY - < YOUR SECRET KEY >
     - Here, AWS_ACCESS_KEY and AWS_SECRET_KEY are the secret names, make sure the names are as is, if not find these names in .drone.yml file in the root repo and replace it with whatever you would prefer.
- - That's it, this Pipeline will do all the heavy lifting.
+ - That's it, **The one push Pipeline will do all the heavy lifting i.e. Deploy to AWS and everything will be up and running**
  
  **NOTE: The Stack uses my Hosted Zone "iamsulabh.com", and it creates a CNAME Record mapped to ELB DNS NAME. So, my app is available at, http://ecs-app.iamsulabh.com. However, this will not work for you, so, you can just test as http://<YOUR_ELB_DNS_NAME (You can get ELB DNS NAME from EC2 Service -> Load Balancers).**
 
