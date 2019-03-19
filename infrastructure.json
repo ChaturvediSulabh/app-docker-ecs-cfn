@@ -361,8 +361,7 @@
         "ECSAutoScalingGroup": {
             "Type": "AWS::AutoScaling::AutoScalingGroup",
             "Properties": {
-                "VPCZoneIdentifier": [
-                    {
+                "VPCZoneIdentifier": [{
                         "Ref": "PrivateSubnetOne"
                     },
                     {
@@ -397,11 +396,9 @@
                 "ImageId": {
                     "Ref": "ECSAMI"
                 },
-                "SecurityGroups": [
-                    {
-                        "Ref": "EcsHostSecurityGroup"
-                    }
-                ],
+                "SecurityGroups": [{
+                    "Ref": "EcsHostSecurityGroup"
+                }],
                 "InstanceType": {
                     "Ref": "InstanceType"
                 },
@@ -413,106 +410,112 @@
                         "Fn::Sub": "#!/bin/bash -xe\necho ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config\nyum install -y aws-cfn-bootstrap\n/opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ECSAutoScalingGroup --region ${AWS::Region}\n"
                     }
                 }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "088aa3ea-76e0-4d69-8cbb-69477d99e7ba"
+                }
             }
         },
         "AutoscalingRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "AssumeRolePolicyDocument": {
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Service": [
-                                    "application-autoscaling.amazonaws.com"
-                                ]
-                            },
-                            "Action": [
-                                "sts:AssumeRole"
+                    "Statement": [{
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": [
+                                "application-autoscaling.amazonaws.com"
                             ]
-                        }
-                    ]
+                        },
+                        "Action": [
+                            "sts:AssumeRole"
+                        ]
+                    }]
                 },
                 "Path": "/",
-                "Policies": [
-                    {
-                        "PolicyName": "service-autoscaling",
-                        "PolicyDocument": {
-                            "Statement": [
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "application-autoscaling:*",
-                                        "cloudwatch:DescribeAlarms",
-                                        "cloudwatch:PutMetricAlarm",
-                                        "ecs:DescribeServices",
-                                        "ecs:UpdateService"
-                                    ],
-                                    "Resource": "*"
-                                }
-                            ]
-                        }
+                "Policies": [{
+                    "PolicyName": "service-autoscaling",
+                    "PolicyDocument": {
+                        "Statement": [{
+                            "Effect": "Allow",
+                            "Action": [
+                                "application-autoscaling:*",
+                                "cloudwatch:DescribeAlarms",
+                                "cloudwatch:PutMetricAlarm",
+                                "ecs:DescribeServices",
+                                "ecs:UpdateService"
+                            ],
+                            "Resource": "*"
+                        }]
                     }
-                ]
+                }]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "8853dad0-429b-4188-95ce-6987d4bdaf01"
+                }
             }
         },
         "EC2InstanceProfile": {
             "Type": "AWS::IAM::InstanceProfile",
             "Properties": {
                 "Path": "/",
-                "Roles": [
-                    {
-                        "Ref": "EC2Role"
-                    }
-                ]
+                "Roles": [{
+                    "Ref": "EC2Role"
+                }]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "0eb25c42-c72e-478f-bbe3-1f085f8fda94"
+                }
             }
         },
         "EC2Role": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "AssumeRolePolicyDocument": {
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Service": [
-                                    "ec2.amazonaws.com"
-                                ]
-                            },
-                            "Action": [
-                                "sts:AssumeRole"
+                    "Statement": [{
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": [
+                                "ec2.amazonaws.com"
                             ]
-                        }
-                    ]
+                        },
+                        "Action": [
+                            "sts:AssumeRole"
+                        ]
+                    }]
                 },
                 "Path": "/",
-                "Policies": [
-                    {
-                        "PolicyName": "ecs-service",
-                        "PolicyDocument": {
-                            "Statement": [
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "ecs:CreateCluster",
-                                        "ecs:DeregisterContainerInstance",
-                                        "ecs:DiscoverPollEndpoint",
-                                        "ecs:Poll",
-                                        "ecs:RegisterContainerInstance",
-                                        "ecs:StartTelemetrySession",
-                                        "ecs:Submit*",
-                                        "logs:CreateLogStream",
-                                        "logs:PutLogEvents",
-                                        "ecr:GetAuthorizationToken",
-                                        "ecr:BatchGetImage",
-                                        "ecr:GetDownloadUrlForLayer"
-                                    ],
-                                    "Resource": "*"
-                                }
-                            ]
-                        }
+                "Policies": [{
+                    "PolicyName": "ecs-service",
+                    "PolicyDocument": {
+                        "Statement": [{
+                            "Effect": "Allow",
+                            "Action": [
+                                "ecs:CreateCluster",
+                                "ecs:DeregisterContainerInstance",
+                                "ecs:DiscoverPollEndpoint",
+                                "ecs:Poll",
+                                "ecs:RegisterContainerInstance",
+                                "ecs:StartTelemetrySession",
+                                "ecs:Submit*",
+                                "logs:CreateLogStream",
+                                "logs:PutLogEvents",
+                                "ecr:GetAuthorizationToken",
+                                "ecr:BatchGetImage",
+                                "ecr:GetDownloadUrlForLayer"
+                            ],
+                            "Resource": "*"
+                        }]
                     }
-                ]
+                }]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "6fcf7c38-fb18-4483-af98-e101f1b222e4"
+                }
             }
         },
         "PublicLoadBalancerSG": {
@@ -522,37 +525,40 @@
                 "VpcId": {
                     "Ref": "VPC"
                 },
-                "SecurityGroupIngress": [
-                    {
-                        "CidrIp": "0.0.0.0/0",
-                        "IpProtocol": -1
-                    }
-                ]
+                "SecurityGroupIngress": [{
+                    "CidrIp": "0.0.0.0/0",
+                    "IpProtocol": -1
+                }]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "7e691b90-17e9-4db0-bb3b-f56fa5c3757d"
+                }
             }
         },
         "PublicLoadBalancer": {
             "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
             "Properties": {
                 "Scheme": "internet-facing",
-                "LoadBalancerAttributes": [
-                    {
-                        "Key": "idle_timeout.timeout_seconds",
-                        "Value": "30"
-                    }
-                ],
-                "Subnets": [
-                    {
+                "LoadBalancerAttributes": [{
+                    "Key": "idle_timeout.timeout_seconds",
+                    "Value": "30"
+                }],
+                "Subnets": [{
                         "Ref": "PublicSubnetOne"
                     },
                     {
                         "Ref": "PublicSubnetTwo"
                     }
                 ],
-                "SecurityGroups": [
-                    {
-                        "Ref": "PublicLoadBalancerSG"
-                    }
-                ]
+                "SecurityGroups": [{
+                    "Ref": "PublicLoadBalancerSG"
+                }]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "34fd785a-5bdc-451f-b9eb-2c47515fd6f3"
+                }
             }
         },
         "DummyTargetGroupPublic": {
@@ -566,8 +572,7 @@
                 "Name": {
                     "Fn::Join": [
                         "-",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "drop-1"
@@ -580,6 +585,11 @@
                 "VpcId": {
                     "Ref": "VPC"
                 }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "75ba03a9-23da-4deb-9a6b-89add920cdd9"
+                }
             }
         },
         "PublicLoadBalancerListener": {
@@ -588,67 +598,64 @@
                 "PublicLoadBalancer"
             ],
             "Properties": {
-                "DefaultActions": [
-                    {
-                        "TargetGroupArn": {
-                            "Ref": "DummyTargetGroupPublic"
-                        },
-                        "Type": "forward"
-                    }
-                ],
+                "DefaultActions": [{
+                    "TargetGroupArn": {
+                        "Ref": "DummyTargetGroupPublic"
+                    },
+                    "Type": "forward"
+                }],
                 "LoadBalancerArn": {
                     "Ref": "PublicLoadBalancer"
                 },
                 "Port": 80,
                 "Protocol": "HTTP"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "8cedd547-4bbc-451c-9580-ac29dd876d0b"
+                }
             }
         },
         "ECSRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "AssumeRolePolicyDocument": {
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Service": [
-                                    "ecs.amazonaws.com"
-                                ]
-                            },
-                            "Action": [
-                                "sts:AssumeRole"
+                    "Statement": [{
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": [
+                                "ecs.amazonaws.com"
                             ]
-                        }
-                    ]
+                        },
+                        "Action": [
+                            "sts:AssumeRole"
+                        ]
+                    }]
                 },
                 "Path": "/",
-                "Policies": [
-                    {
-                        "PolicyName": "ecs-service",
-                        "PolicyDocument": {
-                            "Statement": [
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "ec2:AttachNetworkInterface",
-                                        "ec2:CreateNetworkInterface",
-                                        "ec2:CreateNetworkInterfacePermission",
-                                        "ec2:DeleteNetworkInterface",
-                                        "ec2:DeleteNetworkInterfacePermission",
-                                        "ec2:Describe*",
-                                        "ec2:DetachNetworkInterface",
-                                        "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
-                                        "elasticloadbalancing:DeregisterTargets",
-                                        "elasticloadbalancing:Describe*",
-                                        "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
-                                        "elasticloadbalancing:RegisterTargets"
-                                    ],
-                                    "Resource": "*"
-                                }
-                            ]
-                        }
+                "Policies": [{
+                    "PolicyName": "ecs-service",
+                    "PolicyDocument": {
+                        "Statement": [{
+                            "Effect": "Allow",
+                            "Action": [
+                                "ec2:AttachNetworkInterface",
+                                "ec2:CreateNetworkInterface",
+                                "ec2:CreateNetworkInterfacePermission",
+                                "ec2:DeleteNetworkInterface",
+                                "ec2:DeleteNetworkInterfacePermission",
+                                "ec2:Describe*",
+                                "ec2:DetachNetworkInterface",
+                                "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
+                                "elasticloadbalancing:DeregisterTargets",
+                                "elasticloadbalancing:Describe*",
+                                "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
+                                "elasticloadbalancing:RegisterTargets"
+                            ],
+                            "Resource": "*"
+                        }]
                     }
-                ]
+                }]
             }
         }
     },
@@ -662,8 +669,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "ClusterName"
@@ -692,8 +698,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "ExternalUrl"
@@ -714,8 +719,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "ECSRole"
@@ -733,8 +737,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "PublicListener"
@@ -752,8 +755,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "VPCId"
@@ -771,8 +773,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "PublicSubnetOne"
@@ -790,8 +791,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "PublicSubnetTwo"
@@ -809,8 +809,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "PrivateSubnetOne"
@@ -828,8 +827,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "PrivateSubnetTwo"
@@ -847,8 +845,7 @@
                 "Name": {
                     "Fn::Join": [
                         ":",
-                        [
-                            {
+                        [{
                                 "Ref": "AWS::StackName"
                             },
                             "EcsHostSecurityGroup"

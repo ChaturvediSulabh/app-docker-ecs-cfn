@@ -1,0 +1,26 @@
+jobs:
+  - name: Immutable Infrastructure and IaC Pipeline
+    type: runSh
+    steps:
+      - IN: app-docker-ecs-gitrepo
+        switch: off
+      - IN: aws_cliConfig
+      - TASK:
+          name: validate cfn template
+          script: aws cloudformation validate-template --template-body file://${APP_GITREPO_STATE}/infrastructure.json --region us-east-1
+      - TASK:
+          name: create cfn stack
+          script: aws cloudformation create-stack --stack-name myteststack  --template-body file://${APP_GITREPO_STATE}/infrastructure.json --region us-east-1
+      - TASK:
+          name: create ecr repository
+          script: ${APP_GITREPO_STATE}/docker-task.sh createrepo
+      - TASK:
+          name: build docker image
+          script: ${APP_GITREPO_STATE}/docker-task.sh build
+      - TASK:
+          name: push docker image to ecr
+          script: ${APP_GITREPO_STATE}/docker-task.sh createrepo
+    on_success:
+      - script: echo 'on success !!!!!'
+    on_failure:
+      - script: echo 'Failed job .... :('

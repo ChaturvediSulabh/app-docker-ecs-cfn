@@ -1,0 +1,14 @@
+Resources:
+  # Pointer to a repository on source control
+  - name: app-docker-ecs-gitrepo
+    type: gitRepo
+    integration: github
+    pointer:
+      sourceName: ChaturvediSulabh/app-docker-ecs-cfn
+      branch: master
+  # Pointer to AWS account
+  - name: aws_cliConfig   
+    type: cliConfig
+    integration: AWS_Personal_Account                 
+    pointer:
+      region: us-east-1 
