@@ -2,16 +2,28 @@ kind: pipeline
 name: app-ecs-cfn-ecr-pipeline
 
 steps:
+- name: validate cfn tempate
+  image: robertstettner/drone-cloudformation
+  settings:
+    mode: validate
+    stackname: app-ecs-cfn-stack
+    template: templates/infrastructure.json
+    access_key: 
+      from_secret: AWS_ACCESS_KEY
+    secret_key:
+      from_secret: AWS_SECRET_KEY
 - name: create cfn stack
   image: robertstettner/drone-cloudformation
-  stackname: app-ecs-cfn-stack
-  template: templates/infrastructure.json
-  access_key: 
-    from_secret: AWS_ACCESS_KEY
-  secret_key:
-    from_secret: AWS_SECRET_KEY
-  params:
+  settings:
+    pull: true
+    stackname: app-ecs-cfn-stack
+    template: templates/infrastructure.json
+    access_key: 
+      from_secret: AWS_ACCESS_KEY
+    secret_key:
+      from_secret: AWS_SECRET_KEY
+    params:
       Version: 1
       Environment: staging
-  when:
-    event: deployment
+    when:
+      event: deployment
