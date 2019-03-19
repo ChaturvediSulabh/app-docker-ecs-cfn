@@ -7,7 +7,7 @@ Following is the pictorial representation of the task
 ![HighLevelDesign](https://github.com/ChaturvediSulabh/app-docker-ecs-cfn/blob/master/resources/images/new-designer.png)
 
 
-# How does I test It ?
+# How do I make it work ?
 - Fork this repo 
 - Create a free account on [DroneCloud](https://cloud.drone.io) using your GitHub Account
 - Activate your forked repo (You will see an option to Activate, against all the repos Drone has been provided access to)
