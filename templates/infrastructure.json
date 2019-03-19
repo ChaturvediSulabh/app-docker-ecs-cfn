@@ -323,7 +323,7 @@
         "ECSCluster": {
             "Type": "AWS::ECS::Cluster",
             "Properties": {
-                "ClusterName": "simple-go-webserver-cluster"
+                "ClusterName": "nginx-cluster"
             }
         },
         "EcsHostSecurityGroup": {
@@ -408,7 +408,7 @@
                     "Ref": "TaskDefinition"
                 },
                 "LoadBalancers": [{
-                    "ContainerName": "simple-go-webserver",
+                    "ContainerName": "nginx",
                     "ContainerPort": 80,
                     "TargetGroupArn": {
                         "Ref": "DummyTargetGroupPublic"
@@ -419,11 +419,11 @@
         "TaskDefinition": {
             "Type": "AWS::ECS::TaskDefinition",
             "Properties": {
-                "Family": "simple-go-webserver",
+                "Family": "nginx",
                 "ContainerDefinitions": [{
-                    "Name": "simple-go-webserver",
+                    "Name": "nginx",
                     "Essential": true,
-                    "Image": "chaturvedisulabh/simple-go-webserver",
+                    "Image": "nginx",
                     "Environment": [{
                         "Name": "region",
                         "Value": "AWS::Region"
@@ -660,6 +660,24 @@
                 "AWS::CloudFormation::Designer": {
                     "id": "8cedd547-4bbc-451c-9580-ac29dd876d0b"
                 }
+            }
+        },
+        "DNS" : {
+            "Type" : "AWS::Route53::RecordSetGroup",
+            "DependsOn": "PublicLoadBalancer",
+            "Properties" : {
+              "HostedZoneName" : "iamsulabh.com.",
+              "Comment" : "Zone apex alias targeted to myELB LoadBalancer.",
+              "RecordSets" : [
+                {
+                  "Name" : "iamsulabh.com.",
+                  "Type" : "A",
+                  "AliasTarget" : {
+                      "HostedZoneId" : { "Fn::GetAtt" : ["PublicLoadBalancer", "CanonicalHostedZoneNameID"] },
+                      "DNSName" : { "Fn::GetAtt" : ["PublicLoadBalancer","DNSName"] }
+                  }
+                }
+              ]
             }
         },
         "ECSRole": {
