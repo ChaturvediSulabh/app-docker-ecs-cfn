@@ -1,0 +1,15 @@
+pipeline:
+  validate-template:
+    image: robertstettner/drone-cloudformation
+    mode: validate
+    template: templates/infrastructure.json
+  deploy:
+    image: robertstettner/drone-cloudformation
+    stackname: app-ecs-cfn-stack
+    template: templates/infrastructure.json
+    region: us-east-1
+    params:
+      Version: 1
+      Environment: staging
+    when:
+      event: deployment
