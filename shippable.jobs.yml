@@ -1,5 +1,5 @@
 jobs:
-  - name: Immutable Infrastructure and IaC Pipeline
+  - name: Immutable-Infrastructure-IaC-Pipeline
     type: runSh
     steps:
       - IN: app-docker-ecs-gitrepo
@@ -19,8 +19,4 @@ jobs:
           script: ${APP_GITREPO_STATE}/docker-task.sh build
       - TASK:
           name: push docker image to ecr
-          script: ${APP_GITREPO_STATE}/docker-task.sh createrepo
-    on_success:
-      - script: echo 'on success !!!!!'
-    on_failure:
-      - script: echo 'Failed job .... :('
+          script: ${APP_GITREPO_STATE}/docker-task.sh push
