@@ -1,5 +1,5 @@
 
-# NGX-App-ECS-CFN
+# NGX-APP-ECS-CFN
 
 ## Introduction
 This Task Deploys Nginx Docker container to ECS via CloudFormation and Builds CloudFormation Stack i.e. Deploys to AWS via CI/CD using too Drone CI. 
@@ -41,4 +41,4 @@ Below Image, depicts Nginx accesssible from ELB on Port 80.
 ## Add-Ons or call it extras (out-of-scope - Free)
 - go-simple-webserver is a minimalist webserver (app) written in go
 - Dockerfile - Dockerize the app and create the minimal size image of our app.
-- **Next -> push this to Docker and update infrastructure.json to use your image instead of nginx**
+- **Next -> push this to Docker and update ./templates/infrastructure.json to use your image instead of nginx**
