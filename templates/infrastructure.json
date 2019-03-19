@@ -408,7 +408,7 @@
                     "Ref": "TaskDefinition"
                 },
                 "LoadBalancers": [{
-                    "ContainerName": "go-simple-webserver",
+                    "ContainerName": "simple-go-webserver",
                     "ContainerPort": 80,
                     "TargetGroupArn": {
                         "Ref": "DummyTargetGroupPublic"
@@ -419,7 +419,7 @@
         "TaskDefinition": {
             "Type": "AWS::ECS::TaskDefinition",
             "Properties": {
-                "Family": "go-simple-webserver",
+                "Family": "simple-go-webserver",
                 "ContainerDefinitions": [{
                     "Name": "simple-go-webserver",
                     "Essential": true,
