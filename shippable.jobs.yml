@@ -10,6 +10,3 @@ jobs:
           - script: cd "${SHIPPABLE_BUILD_DIR}"
           - script: aws cloudformation validate-template --template-body file://${SHIPPABLE_BUILD_DIR}/shippable/infrastructure.json --region us-east-1
           - script: aws cloudformation create-stack --stack-name myteststack  --template-body file://${SHIPPABLE_BUILD_DIR}/shippable/infrastructure.json --region us-east-1
-          - script: ${SHIPPABLE_BUILD_DIR}/shippable/docker-task.sh createrepo
-          - script: ${SHIPPABLE_BUILD_DIR}/shippable/docker-task.sh build
-          - script: ${SHIPPABLE_BUILD_DIR}/shippable/docker-task.sh push
