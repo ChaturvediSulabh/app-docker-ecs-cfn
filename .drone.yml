@@ -5,6 +5,7 @@ steps:
 - name: validate cfn tempate
   image: robertstettner/drone-cloudformation
   mode: validate
+  stackname: app-ecs-cfn-stack
   template: templates/infrastructure.json
   access_key: 
     from_secret: AWS_ACCESS_KEY
