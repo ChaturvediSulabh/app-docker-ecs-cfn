@@ -1,3 +1,4 @@
+
 # NGX-App-ECS-CFN
 
 ## Introduction
@@ -21,3 +22,18 @@ Following is the pictorial representation of the task
 
 Below Image, depicts Nginx accesssible from ELB on Port 80.
 ![nginx-elb-80](https://github.com/ChaturvediSulabh/app-docker-ecs-cfn/blob/master/resources/images/Screenshot%202019-03-19%20at%2011.16.59%20PM.png)
+
+## ARTIFACTS
+- CLOUD FORMATION Tempate - templates/infrastructure.json
+- CI/CD Pipeline - .drone.yml
+
+## Why I did, What I did ?
+- ECS fits better for the task and in AWS Ecosystem
+- CloudFormation nicely takes care of its recsources and since, I wasn't actually doing anything outside of AWS. So, I didn't worry about vendor lock-in else would have used Terraform
+- I found using nginx as better then, Writing Dockerfile for just a simple web app.
+- Could have created ECR, but for simplicity sake, I chose to stick with Docker public repository
+- Route53, Public ELB and Private EC2 with ECS running Containers ensures system is locked down and Attache surface is minimal
+
+## What could be done better ?
+- Ideally, KUBERNETES - create k8 cluster on kubernetes using Kops (I prefer, you may fell free to use the one you may want to). Deploy to Kubernetes cluster using CI/CD pipeline. Expose your pod using LoadBalancer service which is accessed from Route53/DNS Recordset in your hosted zone.
+- Why ? Because, No vendor lock-in, More than just Container Orchestration.
