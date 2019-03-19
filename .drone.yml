@@ -29,20 +29,3 @@ steps:
       Environment: staging
     when:
       event: deployment
-
-- name: deploy docker image to ecs service
-  image: plugins/drone-ecs
-  settings:
-    cluster: simple-go-webserver-cluster
-    service: simple-go-webserver-service
-    region: us-east-1
-    family: simple-go-webserver-task-definition
-    image_name: chaturvedisulabh/simple-go-webserver
-    image_tag: latest
-    access_key: 
-      from_secret: AWS_ACCESS_KEY
-    secret_key:
-      from_secret: AWS_SECRET_KEY
-    port_mappings:
-      - 80 80
-    memory: 256

@@ -393,26 +393,49 @@
                 }
             }
         },
-        "ECSService": {
+        "Service": {
             "Type": "AWS::ECS::Service",
+            "DependsOn": "PublicLoadBalancerListener",
             "Properties": {
-                "ServiceName": "simple-go-webserver-service",
-                "Cluster": { "Ref": "ECSCluster" },
-                "DesiredCount": 1,
-                "LoadBalancers": [
-                    {
-                        "ContainerName": "simple-go-webserver",
-                        "ContainerPort": "80",
-                        "LoadBalancerName": { "Ref": "PublicLoadBalancer"} 
-                    }
-                ],
-                "Role": { "Ref": "ECSRole" },
-                "TaskDefinition": {
-                    "Fn::Join": ["", ["arn:aws:ecs:", { "Ref": "AWS::Region" },
-                    ":", { "Ref": "AWS::AccountId" },
-                    ":task-definition/simple-go-webserver-task-definition:123"]]}
+              "Cluster": "ECSCluster",
+              "Role": "ECSRole",
+              "DesiredCount": "1",
+              "TaskDefinition": "TaskDefinition",
+              "LoadBalancers": [
+                {
+                  "ContainerName": "go-simple-webserver",
+                  "ContainerPort": 80,
+                  "TargetGroupArn": { "Ref": "DummyTargetGroupPublic" }
                 }
-        },
+              ]
+            }
+          },
+          "TaskDefinition": {
+            "Type": "AWS::ECS::TaskDefinition",
+            "Properties": {
+              "Family": "go-simple-webserver",
+              "ContainerDefinitions": [
+                {
+                  "Name": "simple-go-webserver",
+                  "Essential": true,
+                  "Image": "chaturvedisulabh/simple-go-webserver",
+                  "Environment": [
+                    {
+                      "Name": "region",
+                      "Value": "AWS::Region"
+                    }
+                  ],
+                  "Cpu": 256,
+                  "MemoryReservation": 512,
+                  "PortMappings": [
+                    {
+                      "ContainerPort": 80
+                    }
+                  ]
+                }
+              ]
+            }
+          },
         "ContainerInstances": {
             "Type": "AWS::AutoScaling::LaunchConfiguration",
             "Properties": {
