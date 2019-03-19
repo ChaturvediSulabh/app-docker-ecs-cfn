@@ -670,12 +670,12 @@
               "Comment" : "Zone apex alias targeted to myELB LoadBalancer.",
               "RecordSets" : [
                 {
-                  "Name" : "iamsulabh.com.",
-                  "Type" : "A",
-                  "AliasTarget" : {
-                      "HostedZoneId" : { "Fn::GetAtt" : ["PublicLoadBalancer", "CanonicalHostedZoneNameID"] },
-                      "DNSName" : { "Fn::GetAtt" : ["PublicLoadBalancer","DNSName"] }
-                  }
+                  "Name" : "ecs-app.iamsulabh.com.",
+                  "Type" : "CNAME",
+                  "TTL": "900",
+                  "SetIdentifier" : "ECS-APP-FRONTEND",
+                  "Weight" : "4",
+                  "ResourceRecords" : [ { "Fn::GetAtt" : ["PublicLoadBalancer","DNSName"] } ]
                 }
               ]
             }
