@@ -6,17 +6,8 @@ jobs:
         switch: off
       - IN: aws_cliConfig
       - TASK:
-          name: validate-cfn-template
-          script: aws cloudformation validate-template --template-body file://${APP_GITREPO_STATE}/infrastructure.json --region us-east-1
-      - TASK:
-          name: create-cfn-stack
-          script: aws cloudformation create-stack --stack-name myteststack  --template-body file://${APP_GITREPO_STATE}/infrastructure.json --region us-east-1
-      - TASK:
-          name: create-ecr-repository
-          script: ${APP_GITREPO_STATE}/docker-task.sh createrepo
-      - TASK:
-          name: build-docker-image
-          script: ${APP_GITREPO_STATE}/docker-task.sh build
-      - TASK:
-          name: push-docker-image-to-ecr
-          script: ${APP_GITREPO_STATE}/docker-task.sh push
+          - script: aws cloudformation validate-template --template-body file://${APP_GITREPO_STATE}/infrastructure.json --region us-east-1
+          - script: aws cloudformation create-stack --stack-name myteststack  --template-body file://${APP_GITREPO_STATE}/infrastructure.json --region us-east-1
+          - script: ${APP_GITREPO_STATE}/docker-task.sh createrepo
+          - script: ${APP_GITREPO_STATE}/docker-task.sh build
+          - script: ${APP_GITREPO_STATE}/docker-task.sh push
