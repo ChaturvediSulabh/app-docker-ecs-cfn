@@ -397,45 +397,45 @@
             "Type": "AWS::ECS::Service",
             "DependsOn": "PublicLoadBalancerListener",
             "Properties": {
-              "Cluster": "ECSCluster",
-              "Role": "ECSRole",
-              "DesiredCount": "1",
-              "TaskDefinition": "TaskDefinition",
-              "LoadBalancers": [
-                {
-                  "ContainerName": "go-simple-webserver",
-                  "ContainerPort": 80,
-                  "TargetGroupArn": { "Ref": "DummyTargetGroupPublic" }
-                }
-              ]
+                "Cluster": {
+                    "Ref": "ECSCluster"
+                },
+                "Role": {
+                    "Ref": "ECSRole"
+                },
+                "DesiredCount": "1",
+                "TaskDefinition": {
+                    "Ref": "TaskDefinition"
+                },
+                "LoadBalancers": [{
+                    "ContainerName": "go-simple-webserver",
+                    "ContainerPort": 80,
+                    "TargetGroupArn": {
+                        "Ref": "DummyTargetGroupPublic"
+                    }
+                }]
             }
-          },
-          "TaskDefinition": {
+        },
+        "TaskDefinition": {
             "Type": "AWS::ECS::TaskDefinition",
             "Properties": {
-              "Family": "go-simple-webserver",
-              "ContainerDefinitions": [
-                {
-                  "Name": "simple-go-webserver",
-                  "Essential": true,
-                  "Image": "chaturvedisulabh/simple-go-webserver",
-                  "Environment": [
-                    {
-                      "Name": "region",
-                      "Value": "AWS::Region"
-                    }
-                  ],
-                  "Cpu": 256,
-                  "MemoryReservation": 512,
-                  "PortMappings": [
-                    {
-                      "ContainerPort": 80
-                    }
-                  ]
-                }
-              ]
+                "Family": "go-simple-webserver",
+                "ContainerDefinitions": [{
+                    "Name": "simple-go-webserver",
+                    "Essential": true,
+                    "Image": "chaturvedisulabh/simple-go-webserver",
+                    "Environment": [{
+                        "Name": "region",
+                        "Value": "AWS::Region"
+                    }],
+                    "Cpu": 256,
+                    "MemoryReservation": 512,
+                    "PortMappings": [{
+                        "ContainerPort": 80
+                    }]
+                }]
             }
-          },
+        },
         "ContainerInstances": {
             "Type": "AWS::AutoScaling::LaunchConfiguration",
             "Properties": {
