@@ -412,7 +412,6 @@
                     ":", { "Ref": "AWS::AccountId" },
                     ":task-definition/simple-go-webserver-task-definition:123"]]}
                 }
-            }
         },
         "ContainerInstances": {
             "Type": "AWS::AutoScaling::LaunchConfiguration",
