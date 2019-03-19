@@ -12,12 +12,14 @@ steps:
       from_secret: AWS_ACCESS_KEY
     secret_key:
       from_secret: AWS_SECRET_KEY
+
 - name: create cfn stack
   image: robertstettner/drone-cloudformation
   settings:
     pull: true
     stackname: app-ecs-cfn-stack
     template: templates/infrastructure.json
+    region: us-east-1
     access_key: 
       from_secret: AWS_ACCESS_KEY
     secret_key:
@@ -27,3 +29,19 @@ steps:
       Environment: staging
     when:
       event: deployment
+
+- name: deploy docker image to ecs service
+  image: peloton/drone-ecs
+  settings:
+    access_key: 
+      from_secret: AWS_ACCESS_KEY
+    secret_key:
+      from_secret: AWS_SECRET_KEY
+    service: simple-go-webserver-service
+    region: us-east-1
+    family: simple-go-webserver-task
+    image_name: chaturvedisulabh/simple-go-webserver
+    image_tag: latest
+    port_mappings:
+      - 80 80
+    memory: 128
