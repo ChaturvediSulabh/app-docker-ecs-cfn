@@ -2,7 +2,7 @@
 # NGX-APP-ECS-CFN
 
 ## Introduction
-This Task Deploys Nginx Docker container to ECS via CloudFormation and Builds CloudFormation Stack i.e. Deploys to AWS via CI/CD using too Drone CI. 
+This Task Deploys Nginx Docker container to ECS via `CloudFormation` and Builds CloudFormation Stack i.e. Deploys to AWS via CI/CD using tool called `Drone CI`. 
 Following is the pictorial representation of the task
 ![HighLevelDesign](https://github.com/ChaturvediSulabh/app-docker-ecs-cfn/blob/master/resources/images/new-designer.png)
 
