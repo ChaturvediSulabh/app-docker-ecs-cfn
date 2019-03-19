@@ -3,6 +3,8 @@ pipeline:
     image: robertstettner/drone-cloudformation
     mode: validate
     template: templates/infrastructure.json
+    access_key: 
+    secret_key:
   deploy:
     image: robertstettner/drone-cloudformation
     stackname: app-ecs-cfn-stack
@@ -11,5 +13,7 @@ pipeline:
     params:
       Version: 1
       Environment: staging
+    access_key: AKIAJPLVJEU6QKDKQU5A
+    secret_key: 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
     when:
       event: deployment
