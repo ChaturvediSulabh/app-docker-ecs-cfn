@@ -35,7 +35,7 @@ Below Image, depicts Nginx accesssible from ELB on Port 80.
 - Route53, Public ELB and Private EC2 with ECS running Containers ensures system is locked down and Attack surface is minimal
 
 ## What could be done better ?
-- Ideally, KUBERNETES - create k8 cluster on kubernetes using Kops (I prefer, you may fell free to use the one you may want to). Deploy to Kubernetes cluster using CI/CD pipeline. Expose your pod using LoadBalancer service which is accessed from Route53/DNS Recordset in your hosted zone.
+- Ideally, KUBERNETES - create k8 cluster on kubernetes using Kops (I prefer, you may feel free to use the one you may want to). Deploy to Kubernetes cluster using CI/CD pipeline. Expose your pod using LoadBalancer service which is accessed from Route53/DNS Recordset in your hosted zone.
 - Why ? Because, No vendor lock-in, More than just Container Orchestration.
 
 ## Add-Ons or call it extras (out-of-scope - Free)
